@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memory-app
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: memory-app
+  replicas: 1
+  template:
+    metadata:
+      name: memory-app
+      labels:
+        app: memory-app
+    spec:
+      containers:
+        - name: memory-app
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: memory-postgres-config
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: memory-postgres-secret
+                  key: password
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: memory-hostname-config
+                  key: postgres_host
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: memory-postgres-config
+                  key: postgres_db
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: memory-postgres-config
+                  key: postgres_port
+          image: mps4dev/memory:1.0

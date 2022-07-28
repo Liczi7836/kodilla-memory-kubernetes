@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<header><title>Memory Application</title></header>
+<body>
+<tr th:if="${value == null}">
+    <div>No value memorized</div>
+</tr>
+<tr th:if="${value != null}">
+    <div th:text="${value}"></div>
+</tr>
+<form method="post" action="/memorize" class="form-actions">
+    <input type="text" name="value" />
+    <input type="submit" value="Memorize" />
+</form>
+</body>
+</html>
